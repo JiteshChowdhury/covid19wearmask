@@ -1,0 +1,36 @@
+  body{
+    margin: auto;
+    overflow-y: scroll;
+    font-family: 'Arvo', serif;
+    background-color: #E9E9E9;
+    color: #A42C2B;
+  }
+
+  #sketch-div{
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: auto;
+  } 
+
+  #tags {
+    /* max-width: 250px; */
+    margin: auto;
+  }
+
+  .center{
+    width: 60%;
+    margin: 0 auto;
+    padding-bottom: 30px;
+  }
+
+  /* #sketch-div::-webkit-scrollbar {
+    display: none;
+} */
+
+input{
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
