@@ -215,6 +215,11 @@ function draw(){
 
 }
 
+function capitalize_Words(str)
+{
+ return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 $(function() {
 
   $("#distInput").tags({
@@ -227,7 +232,7 @@ $(function() {
 
   $("#distInput").on("tagRemove",function(e,tag){
 
-    nTag = tag[0].toUpperCase() + tag.slice(1);
+    nTag = capitalize_Words(tag);
 
     for(i=0;i<listDist.length;i++){
       if(listDist[i].district == nTag){
@@ -247,7 +252,7 @@ $(function() {
   
   $("#distInput").on("tagAdd",function(e,tag){
 
-    nTag = tag[0].toUpperCase() + tag.slice(1);
+    nTag = capitalize_Words(tag);
 
     for(i=0;i<coronaData.length;i++){
       for(j=0;j<coronaData[i].districtData.length;j++){
