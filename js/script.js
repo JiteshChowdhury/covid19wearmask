@@ -99,11 +99,14 @@ function draw(){
           var i = y * video.width + x;
           var darkness = (255 - video.pixels[i*4])/255;
           var size = stepSize * darkness;
+          // tint(255, 127);
           if(size<=17 && size>=5){
               image(img1, x, y, size, size);
           }
         }
       }
+      fill('rgba(223,223,223, 0.49)');
+      rect(0,0,innerWidth, innerHeight);
     }
 
     fill('rgba(223,223,223, 0.70)');
@@ -179,7 +182,7 @@ function draw(){
             fill('rgba(225,151,26, 0.50)');
           }
           else if(listZone[countD].zone == "Red" && listZone){
-            fill('rgba(225,67,69, 0.40)');
+            fill('rgba(225,67,69, 0.45)');
           }else{
             fill('rgba(223,223,223, 0.70)');
           }
