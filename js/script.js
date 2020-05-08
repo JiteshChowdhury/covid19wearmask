@@ -65,6 +65,7 @@ function modelReady() {
   for(i=0;i<coronaData.length;i++){
     for(j=0;j<coronaData[i].districtData.length;j++){
       districts.push(coronaData[i].districtData[j].district);
+      districts.push(coronaData[i].districtData[j].district.toLowerCase());
       activeData.push(coronaData[i].districtData[j]);
       if(coronaData[i].districtData[j].district == city){
         listDist.push(coronaData[i].districtData[j]);
@@ -226,15 +227,17 @@ $(function() {
 
   $("#distInput").on("tagRemove",function(e,tag){
 
+    nTag = tag[0].toUpperCase() + tag.slice(1);
+
     for(i=0;i<listDist.length;i++){
-      if(listDist[i].district == tag){
+      if(listDist[i].district == nTag){
         listDist.splice(i, 1);
         break;
       }
     }
 
     for(i=0;i<listZone.length;i++){
-      if(listZone[i].district == tag){
+      if(listZone[i].district == nTag){
         listZone.splice(i, 1);
         break;
       }
@@ -244,9 +247,11 @@ $(function() {
   
   $("#distInput").on("tagAdd",function(e,tag){
 
+    nTag = tag[0].toUpperCase() + tag.slice(1);
+
     for(i=0;i<coronaData.length;i++){
       for(j=0;j<coronaData[i].districtData.length;j++){
-        if(coronaData[i].districtData[j].district == tag){
+        if(coronaData[i].districtData[j].district == nTag){
           listDist.push(coronaData[i].districtData[j]);
           break;
         }
@@ -254,7 +259,7 @@ $(function() {
     }
 
     for(i=0;i<zoneData.length;i++){
-      if(zoneData[i].district == tag){
+      if(zoneData[i].district == nTag){
         listZone.push(zoneData[i]);
         break;
       }
