@@ -106,7 +106,7 @@ function draw(){
           }
         }
       }
-      fill('rgba(223,223,223, 0.49)');
+      fill('rgba(223,223,223, 0.40)');
       rect(0,0,innerWidth, innerHeight);
     }
 
@@ -212,7 +212,7 @@ function draw(){
       }
       x=x+gridWidth;
     }
-
+    sleep(250);
 }
 
 function capitalize_Words(str)
@@ -273,5 +273,13 @@ $(function() {
   });
 
 });
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
 
 
