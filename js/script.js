@@ -174,19 +174,26 @@ function draw(){
       }
       if(i!=4){
         if(listDist[countD]){
-          // fill('rgba(164,44,43, 0.7)');
+          stroke('#fae');
+          strokeWeight(4);
           if(listZone[countD].zone == "Green" && listZone){
-            fill('rgba(119,221,119, 0.55)');
+            stroke('rgba(119,221,119, 0.55)');
+            strokeWeight(6);
           }
           else if(listZone[countD].zone == "Orange" && listZone){
-            fill('rgba(225,151,26, 0.50)');
+            stroke('rgba(225,151,26, 0.50)');
+            strokeWeight(6);
           }
           else if(listZone[countD].zone == "Red" && listZone){
-            fill('rgba(225,67,69, 0.45)');
+            stroke('rgba(225,67,69, 0.45)');
+            strokeWeight(6);
           }else{
-            fill('rgba(223,223,223, 0.70)');
+            stroke('rgba(223,223,223)');
+            strokeWeight(6);
           }
+          fill('rgba(223,223,223, 0.70)');
           rect(x+(innerWidth/35),y+(gridHeight/4),gridWidth-(innerWidth/18),gridHeight/1.5,10);
+          noStroke();
           textSize(innerWidth/50);
           textAlign(LEFT);
           textStyle(BOLD);
