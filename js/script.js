@@ -105,7 +105,7 @@ function draw(){
           }
         }
       }
-      fill('rgba(223,223,223, 0.30)');
+      fill('rgba(223,223,223, 0.45)');
       rect(0,0,innerWidth, (innerWidth*3)/5);
     }
 
@@ -137,18 +137,18 @@ function draw(){
           for(i=0;i<50;i++){
             let xRandom = random((poseKeypointX),(poseKeypointX+imgSize));
             let yRandom = random((poseKeypointY),(poseKeypointY+imgSize));
-            let sizeRandom = random(15,20);
+            let sizeRandom = random(15,25);
             var randomColor = colorArray[Math.floor(Math.random()*3)];
             fill(randomColor);
             image(img1, xRandom, yRandom, sizeRandom, sizeRandom);
           }
         }
         else{
-          for(i=0;i<100;i++){
+          for(i=0;i<50;i++){
             let xRandom = random(0,innerWidth);
             let yRandom = random(0,innerHeight);
             if((((poseKeypointX+imgSize-30) < xRandom) || (xRandom < poseKeypointX+30)) || (((poseKeypointY+imgSize-30) < yRandom) || (yRandom < poseKeypointY+30))){
-              let sizeRandom = random(15,25);
+              let sizeRandom = random(15,30);
               var randomColor = colorArray[Math.floor(Math.random()*3)];
               fill(randomColor);
               image(img1, xRandom, yRandom, sizeRandom, sizeRandom);
@@ -172,6 +172,7 @@ function draw(){
           if(!listZone[countD]){
             stroke('rgba(223,223,223)');
             strokeWeight(8);
+            fill('rgba(223,223,223, 0.70)');
           }
           else{
             for(k=0;k<listZone.length;k++){
@@ -179,27 +180,29 @@ function draw(){
                 if(listZone[k].zone == "Green"){
                   stroke('rgba(119,221,119, 0.55)');
                   strokeWeight(8);
+                  fill('rgba(119,221,119, 0.20)');
                   break;
                 }
                 else if(listZone[k].zone == "Orange"){
                   stroke('rgba(225,151,26, 0.50)');
                   strokeWeight(8);
+                  fill('rgba(225,151,26, 0.20)');
                   break;
                 }
                 else if(listZone[k].zone == "Red"){
                   stroke('rgba(225,67,69, 0.45)');
                   strokeWeight(8);
+                  fill('rgba(225,67,69, 0.20)');
                   break;
                 }
               }
             }
           }
-          fill('rgba(223,223,223, 0.70)');
           rect(x+(innerWidth/35),y+(gridHeight/3.5),gridWidth-(innerWidth/18),gridHeight/1.5,10);
           noStroke();
           textSize(innerWidth/75);
           textAlign(LEFT);
-          textStyle(NORMAL);
+          textStyle(BOLD);
           fill("#A42C2B");
           text('District: '+listDist[countD].district, x+(innerWidth/25), y+(gridHeight/4)+(innerWidth/28));
           text('Active Cases: '+listDist[countD].active, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/31)*2));
