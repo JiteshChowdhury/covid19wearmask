@@ -20,7 +20,7 @@ var listDist = [];
 var listZone = [];
 
 function setup() {
-    var canvas = createCanvas(innerWidth, innerHeight);
+    var canvas = createCanvas(innerWidth, (innerWidth*3)/5);
     canvas.parent('sketch-div');
 
     img1 = loadImage('images/virus.png');
@@ -100,18 +100,16 @@ function draw(){
           var i = y * video.width + x;
           var darkness = (255 - video.pixels[i*4])/255;
           var size = stepSize * darkness;
-          // tint(255, 127);
           if(size<=17 && size>=5){
               image(img1, x, y, size, size);
           }
         }
       }
-      fill('rgba(223,223,223, 0.40)');
-      rect(0,0,innerWidth, innerHeight);
+      fill('rgba(223,223,223, 0.30)');
+      rect(0,0,innerWidth, (innerWidth*3)/5);
     }
 
     fill('rgba(223,223,223, 0.70)');
-    // rect(innerWidth/4.9,10,innerWidth/1.7, (innerWidth/23));
     rect(innerWidth/35,10,((innerWidth/3)-(innerWidth/52))*3, (innerWidth/23));
     textSize(innerWidth/40);
     textAlign(CENTER);
@@ -121,8 +119,8 @@ function draw(){
     textSize(innerWidth/74);
     textAlign(CENTER);
     textStyle(NORMAL);
-    fill(0);
-    text('(Wear the Mask and see the magic of virus cluster moving away from your face.)', innerWidth/2, innerWidth/22);
+    fill('rgb(99,99,99)');
+    text('(Wear the mask and see the magic of virus cluster moving away from your face.)', innerWidth/2, innerWidth/22);
 
     if(poses.length == 0){
     }
@@ -139,71 +137,75 @@ function draw(){
           for(i=0;i<50;i++){
             let xRandom = random((poseKeypointX),(poseKeypointX+imgSize));
             let yRandom = random((poseKeypointY),(poseKeypointY+imgSize));
-            let sizeRandom = random(5,15);
+            let sizeRandom = random(15,20);
             var randomColor = colorArray[Math.floor(Math.random()*3)];
             fill(randomColor);
-            circle(xRandom, yRandom, sizeRandom);
-            // image(img, xRandom, yRandom, sizeRandom, sizeRandom);
+            image(img1, xRandom, yRandom, sizeRandom, sizeRandom);
           }
-          //image(img, poseKeypointX, poseKeypointY, imgSize, imgSize);
         }
         else{
           for(i=0;i<100;i++){
             let xRandom = random(0,innerWidth);
             let yRandom = random(0,innerHeight);
             if((((poseKeypointX+imgSize-30) < xRandom) || (xRandom < poseKeypointX+30)) || (((poseKeypointY+imgSize-30) < yRandom) || (yRandom < poseKeypointY+30))){
-              let sizeRandom = random(5,15);
+              let sizeRandom = random(15,25);
               var randomColor = colorArray[Math.floor(Math.random()*3)];
               fill(randomColor);
-              circle(xRandom, yRandom, sizeRandom);
+              image(img1, xRandom, yRandom, sizeRandom, sizeRandom);
             }
           }
-          //image(imgh, poseKeypointX, poseKeypointY, imgSize*1.1, imgSize*1.1);
         }
     }
 
-    var gridWidth = innerWidth/3;
-    var gridHeight = innerHeight/2;
-    var elementSize = gridWidth;
+    var gridWidth = (innerWidth/4);
+    var gridHeight = gridWidth;
     var x= 0;
     var y= 0;
     var countD = 0;
-    for(i=0;i<6;i++){
-      if(i==3){
+    for(i=0;i<8;i++){
+      if(i==4){
         y=y+(gridHeight/1.2);
         x=0;
       }
-      if(i!=4){
+      if(i!=5){
         if(listDist[countD]){
-          stroke('#fae');
-          strokeWeight(4);
-          if(listZone[countD].zone == "Green" && listZone){
-            stroke('rgba(119,221,119, 0.55)');
-            strokeWeight(6);
-          }
-          else if(listZone[countD].zone == "Orange" && listZone){
-            stroke('rgba(225,151,26, 0.50)');
-            strokeWeight(6);
-          }
-          else if(listZone[countD].zone == "Red" && listZone){
-            stroke('rgba(225,67,69, 0.45)');
-            strokeWeight(6);
-          }else{
+          if(!listZone[countD]){
             stroke('rgba(223,223,223)');
-            strokeWeight(6);
+            strokeWeight(8);
+          }
+          else{
+            for(k=0;k<listZone.length;k++){
+              if(listDist[countD].district == listZone[k].district){
+                if(listZone[k].zone == "Green"){
+                  stroke('rgba(119,221,119, 0.55)');
+                  strokeWeight(8);
+                  break;
+                }
+                else if(listZone[k].zone == "Orange"){
+                  stroke('rgba(225,151,26, 0.50)');
+                  strokeWeight(8);
+                  break;
+                }
+                else if(listZone[k].zone == "Red"){
+                  stroke('rgba(225,67,69, 0.45)');
+                  strokeWeight(8);
+                  break;
+                }
+              }
+            }
           }
           fill('rgba(223,223,223, 0.70)');
-          rect(x+(innerWidth/35),y+(gridHeight/4),gridWidth-(innerWidth/18),gridHeight/1.5,10);
+          rect(x+(innerWidth/35),y+(gridHeight/3.5),gridWidth-(innerWidth/18),gridHeight/1.5,10);
           noStroke();
-          textSize(innerWidth/50);
+          textSize(innerWidth/75);
           textAlign(LEFT);
-          textStyle(BOLD);
+          textStyle(NORMAL);
           fill("#A42C2B");
-          text('District: '+listDist[countD].district, x+(innerWidth/24), y+(gridHeight/4)+(innerWidth/35));
-          text('Active Case: '+listDist[countD].active, x+(innerWidth/24), y+(gridHeight/4)+((innerWidth/34)*2));
-          text('Deceased: '+listDist[countD].deceased, x+(innerWidth/24), y+(gridHeight/4)+((innerWidth/34)*3));
-          text('Recovered: '+listDist[countD].recovered, x+(innerWidth/24), y+(gridHeight/4)+((innerWidth/34)*4));
-          text('Total Case: '+listDist[countD].confirmed, x+(innerWidth/24), y+(gridHeight/4)+((innerWidth/34)*5));
+          text('District: '+listDist[countD].district, x+(innerWidth/25), y+(gridHeight/4)+(innerWidth/28));
+          text('Active Cases: '+listDist[countD].active, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/31)*2));
+          text('Deceased: '+listDist[countD].deceased, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*3));
+          text('Recovered: '+listDist[countD].recovered, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*4));
+          text('Total Cases: '+listDist[countD].confirmed, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*5));
           countD++;
         }
         else{
@@ -211,7 +213,11 @@ function draw(){
         }
       }
       x=x+gridWidth;
+      if(i==5){
+        x=x+gridWidth;
+      }
     }
+
     sleep(250);
 }
 
@@ -237,7 +243,7 @@ $(function() {
     for(i=0;i<listDist.length;i++){
       if(listDist[i].district == nTag){
         listDist.splice(i, 1);
-        break;
+        i=i-2;
       }
     }
 
@@ -269,7 +275,6 @@ $(function() {
         break;
       }
     }
-
   });
 
 });
