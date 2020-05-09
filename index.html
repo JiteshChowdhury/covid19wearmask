@@ -13,11 +13,19 @@
     <script src="js/tags.js"></script>
     <link rel="stylesheet" href="style/tags.css">
     <link rel="stylesheet" href="style/style.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166009374-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-166009374-1');
+    </script>
   </head>
   <body>
       <h1 style="text-align: center; font-size: 45px;">COVID-19 India Stay Safe</h1>
       <div class="center">
-        <p style="font-size: larger;">Type district name to know active cases <span style="color: grey; font-size: small;">(eg.: Kolkata/Mumbai/Ahmedabad)</span></p>
+        <p style="font-size: larger;">Type the district name to have a look at the active COVID-19 cases <span style="color: grey; font-size: small;">(eg.: Kolkata/Mumbai/Ahmedabad)</span></p>
         <input style="margin: auto;" type="text" id="distInput"/>
       </div>
       <div id="sketch-div"></div>
