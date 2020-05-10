@@ -33,6 +33,14 @@ function setup() {
       zones = data;
     }, "json");
 
+    $.get("https://ipinfo.io?token=2600069d9abf4d", function(response) {
+      city = response.city;
+      state = response.region;
+      country = response.country;
+      console.log("City IP: "+city);
+      console.log("Country IP: "+country);
+    }, "jsonp");
+
     video = createCapture(VIDEO);
     video.size(width, height);
 
@@ -49,17 +57,11 @@ function setup() {
 
 function modelReady() {
 
-  $.get("https://ipinfo.io?token=2600069d9abf4d", function(response) {
-    city = response.city;
-    state = response.region;
-    country = response.country;
-    console.log("City: "+city);
-  }, "jsonp");
-
-  if(country!="India" || city==""){
-    city = "Kolkata";
-    state = "West Bengal";
+  if(country!="IN"){
+    city = "Mumbai";
+    console.log("City Default: "+city);
   }
+
   document.getElementById("distInput").setAttribute('value', city);
 
   for(i=0;i<coronaData.length;i++){
@@ -169,6 +171,8 @@ function draw(){
       }
       if(i!=5){
         if(listDist[countD]){
+          fill('rgba(223,223,223, 0.70)');
+          rect(x+(innerWidth/35),y+(gridHeight/3.5),gridWidth-(innerWidth/18),gridHeight/1.5,10);
           if(!listZone[countD]){
             stroke('rgba(223,223,223)');
             strokeWeight(8);
