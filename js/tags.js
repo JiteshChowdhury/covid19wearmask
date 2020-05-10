@@ -1,7 +1,7 @@
 (function($) {
 	$.fn.tags = function(opts) {
 		var selector = this.selector;	
-		console.log("selector",selector);	
+		// console.log("selector",selector);	
 		// updates the original input					
 		function update($original) {
 			var all = [];

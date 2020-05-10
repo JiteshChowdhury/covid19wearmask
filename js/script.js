@@ -30,10 +30,26 @@ function setup() {
 
     $.get("https://api.covid19india.org/v2/state_district_wise.json", function(data) {
       coronaData = data;
+
+      for(i=0;i<coronaData.length;i++){
+        for(j=0;j<coronaData[i].districtData.length;j++){
+          districts.push(coronaData[i].districtData[j].district);
+          districts.push(coronaData[i].districtData[j].district.toLowerCase());
+          activeData.push(coronaData[i].districtData[j]);
+          activeCases = activeCases + coronaData[i].districtData[j].active;
+          deceasedCases = deceasedCases + coronaData[i].districtData[j].deceased;
+          recoveredCases = recoveredCases + coronaData[i].districtData[j].recovered;
+        }
+      }
     }, "json");
 
     $.get("https://api.covid19india.org/zones.json", function(data) {
       zones = data;
+
+      for(i=0;i<zones.zones.length;i++){
+        var zoneObj = {district: zones.zones[i].district, zone: zones.zones[i].zone};
+        zoneData.push(zoneObj);
+      }
     }, "json");
 
     video = createCapture(VIDEO);
@@ -51,23 +67,6 @@ function setup() {
 }
 
 function modelReady() {
-
-  for(i=0;i<coronaData.length;i++){
-    for(j=0;j<coronaData[i].districtData.length;j++){
-      districts.push(coronaData[i].districtData[j].district);
-      districts.push(coronaData[i].districtData[j].district.toLowerCase());
-      activeData.push(coronaData[i].districtData[j]);
-      activeCases = activeCases + coronaData[i].districtData[j].active;
-      deceasedCases = deceasedCases + coronaData[i].districtData[j].deceased;
-      recoveredCases = recoveredCases + coronaData[i].districtData[j].recovered;
-    }
-  }
-  
-  for(i=0;i<zones.zones.length;i++){
-    var zoneObj = {district: zones.zones[i].district, zone: zones.zones[i].zone};
-    zoneData.push(zoneObj);
-  }
-
   console.log('Model Loaded');
 }
 
