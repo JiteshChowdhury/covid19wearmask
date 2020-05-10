@@ -18,6 +18,9 @@ var stepSize;
 var imgSize;
 var listDist = [];
 var listZone = [];
+var activeCases = 0;
+var deceasedCases = 0;
+var recoveredCases = 0;
 
 function setup() {
     var canvas = createCanvas(innerWidth, (innerWidth*3)/5);
@@ -32,14 +35,6 @@ function setup() {
     $.get("https://api.covid19india.org/zones.json", function(data) {
       zones = data;
     }, "json");
-
-    $.get("https://ipinfo.io?token=2600069d9abf4d", function(response) {
-      city = response.city;
-      state = response.region;
-      country = response.country;
-      console.log("City IP: "+city);
-      console.log("Country IP: "+country);
-    }, "jsonp");
 
     video = createCapture(VIDEO);
     video.size(width, height);
@@ -57,34 +52,20 @@ function setup() {
 
 function modelReady() {
 
-  if(country!="IN"){
-    city = "Mumbai";
-    console.log("City Default: "+city);
-  }
-
-  document.getElementById("distInput").setAttribute('value', city);
-
   for(i=0;i<coronaData.length;i++){
     for(j=0;j<coronaData[i].districtData.length;j++){
       districts.push(coronaData[i].districtData[j].district);
       districts.push(coronaData[i].districtData[j].district.toLowerCase());
       activeData.push(coronaData[i].districtData[j]);
-      if(coronaData[i].districtData[j].district == city){
-        listDist.push(coronaData[i].districtData[j]);
-      }
+      activeCases = activeCases + coronaData[i].districtData[j].active;
+      deceasedCases = deceasedCases + coronaData[i].districtData[j].deceased;
+      recoveredCases = recoveredCases + coronaData[i].districtData[j].recovered;
     }
   }
   
   for(i=0;i<zones.zones.length;i++){
     var zoneObj = {district: zones.zones[i].district, zone: zones.zones[i].zone};
     zoneData.push(zoneObj);
-  }
-
-  for(i=0;i<zoneData.length;i++){
-    if(zoneData[i].district == city){
-      listZone.push(zoneData[i]);
-      break;
-    }
   }
 
   console.log('Model Loaded');
@@ -165,11 +146,29 @@ function draw(){
     var y= 0;
     var countD = 0;
     for(i=0;i<8;i++){
+      if(i==0){
+        stroke('rgba(174,198,210,0.8)');
+        strokeWeight(8);
+        fill('rgba(223,223,223, 0.70)');
+        rect(x+(innerWidth/35),y+(gridHeight/3.5),gridWidth-(innerWidth/18),gridHeight/1.5,10);
+        rect(x+(innerWidth/35),y+(gridHeight/3.5),gridWidth-(innerWidth/18),gridHeight/1.5,10);
+        noStroke();
+        textSize(innerWidth/75);
+        textAlign(LEFT);
+        textStyle(BOLD);
+        fill('rgba(225,67,69, 0.95)');
+        text('INDIA', x+(innerWidth/25), y+(gridHeight/4)+(innerWidth/28));
+        fill('rgba(225,67,69, 0.85)');
+        text('Active Cases  :      '+activeCases , x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/31)*2));
+        text('Deceased  :             '+deceasedCases , x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*3));
+        text('Recovered  :           '+recoveredCases , x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*4));
+        text('Total Cases  :          '+ (activeCases+deceasedCases+recoveredCases), x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*5));
+      }
       if(i==4){
         y=y+(gridHeight/1.2);
         x=0;
       }
-      if(i!=5){
+      if(i!=5 && i!=0){
         if(listDist[countD]){
           fill('rgba(223,223,223, 0.70)');
           rect(x+(innerWidth/35),y+(gridHeight/3.5),gridWidth-(innerWidth/18),gridHeight/1.5,10);
@@ -207,12 +206,13 @@ function draw(){
           textSize(innerWidth/75);
           textAlign(LEFT);
           textStyle(BOLD);
-          fill("#A42C2B");
+          fill('rgba(225,67,69, 0.95)');
           text('District: '+listDist[countD].district, x+(innerWidth/25), y+(gridHeight/4)+(innerWidth/28));
-          text('Active Cases: '+listDist[countD].active, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/31)*2));
-          text('Deceased: '+listDist[countD].deceased, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*3));
-          text('Recovered: '+listDist[countD].recovered, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*4));
-          text('Total Cases: '+listDist[countD].confirmed, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*5));
+          fill('rgba(225,67,69, 0.85)');
+          text('Active Cases  :      '+listDist[countD].active, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/31)*2));
+          text('Deceased  :             '+listDist[countD].deceased, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*3));
+          text('Recovered  :           '+listDist[countD].recovered, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*4));
+          text('Total Cases  :          '+listDist[countD].confirmed, x+(innerWidth/25), y+(gridHeight/4)+((innerWidth/32)*5));
           countD++;
         }
         else{
